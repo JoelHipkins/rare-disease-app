@@ -1,25 +1,38 @@
 package com.rarediseaseapp.models;
 
+import java.sql.Timestamp;
+
 public class User {
 
-    private int user_id;
+    private int userId;
     private String name;
     private String email;
     private String password;
     private String role;
+    private Timestamp createdAt;
 
     public User() {}
 
-    public User(int user_id, String name, String email, String password, String role) {
-        this.user_id = user_id;
+
+    public User(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public int getUser_id() { return user_id; }
-    public void setUser_id(int user_id) { this.user_id = user_id; }
+git     public User(int userId, String name, String email, String password, String role, Timestamp createdAt) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.createdAt = createdAt;
+    }
+
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -32,4 +45,18 @@ public class User {
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
+
+    public Timestamp getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }
