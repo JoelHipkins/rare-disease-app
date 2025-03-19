@@ -4,103 +4,98 @@ import com.rarediseaseapp.data.UserRepository;
 import com.rarediseaseapp.models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class UserServiceTest {
 
+    @Mock
     private UserRepository userRepository;
+
+    @InjectMocks
     private UserService userService;
-    private BCryptPasswordEncoder passwordEncoder;
+
+    private User user;
 
     @BeforeEach
     void setUp() {
-        userRepository = mock(UserRepository.class);
-        passwordEncoder = new BCryptPasswordEncoder();
-        userService = new UserService(userRepository);
+        user = new User();
+        user.setId(1);
+        user.setUsername("testuser");
+        user.setEmail("test@example.com");
+        user.setPassword("securepassword");
+        user.setRole("USER");
     }
 
     @Test
-    void testRegisterUser_Success() {
-        User user = new User("John Doe", "johndoe@example.com", "password123", "Patient");
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
+    void testSaveUser_Success() {
+        when(userRepository.save(any(User.class))).thenReturn(user);
 
-        assertDoesNotThrow(() -> userService.registerUser(user.getName(), user.getEmail(), user.getPassword(), user.getRole()));
+        User savedUser = userService.saveUser(user);
 
-        verify(userRepository, times(1)).save(any(User.class));
+        assertNotNull(savedUser);
+        assertEquals("testuser", savedUser.getUsername());
+        verify(userRepository, times(1)).save(user);
     }
 
     @Test
-    void testRegisterUser_Fail_DuplicateEmail() {
-        User existingUser = new User(1, "John Doe", "johndoe@example.com", "password123", "Patient", null);
-        when(userRepository.findByEmail(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
+    void testSaveUser_ThrowsException() {
+        when(userRepository.save(any(User.class))).thenThrow(new DataIntegrityViolationException("Duplicate entry"));
 
-        Exception exception = assertThrows(RuntimeException.class, () ->
-                userService.registerUser(existingUser.getName(), existingUser.getEmail(), existingUser.getPassword(), existingUser.getRole())
-        );
+        Exception exception = assertThrows(IllegalStateException.class, () -> userService.saveUser(user));
 
-        assertEquals("Email already exists!", exception.getMessage());
+        assertTrue(exception.getMessage().contains("Error saving user to the database"));
+        verify(userRepository, times(1)).save(user);
     }
 
     @Test
-    void testLoginUser_Success() {
-        String rawPassword = "password123";
-        String hashedPassword = passwordEncoder.encode(rawPassword);
-        User user = new User(1, "Jane Doe", "janedoe@example.com", hashedPassword, "Pharma", null);
+    void testExistsByEmail_UserExists() {
+        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
 
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        boolean exists = userService.existsByEmail("test@example.com");
 
-        User loggedInUser = userService.loginUser(user.getEmail(), rawPassword);
-
-        assertNotNull(loggedInUser);
-        assertEquals(user.getEmail(), loggedInUser.getEmail());
+        assertTrue(exists);
+        verify(userRepository, times(1)).findByEmail("test@example.com");
     }
 
     @Test
-    void testLoginUser_Fail_InvalidPassword() {
-        String hashedPassword = passwordEncoder.encode("password123");
-        User user = new User(1, "Jane Doe", "janedoe@example.com", hashedPassword, "Pharma", null);
+    void testExistsByEmail_UserDoesNotExist() {
+        when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        boolean exists = userService.existsByEmail("nonexistent@example.com");
 
-        User loggedInUser = userService.loginUser(user.getEmail(), "wrongpassword");
-
-        assertNull(loggedInUser);
+        assertFalse(exists);
+        verify(userRepository, times(1)).findByEmail("nonexistent@example.com");
     }
 
     @Test
-    void testUpdateProfile_Success() {
-        User existingUser = new User(1, "Jane Doe", "janedoe@example.com", "password123", "Pharma", null);
-        when(userRepository.findByEmail(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
+    void testFindByEmail_UserFound() {
+        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
 
-        assertDoesNotThrow(() -> userService.updateProfile(1, "Updated Name", "janedoe@example.com", "", "Patient"));
+        User foundUser = userService.findByEmail("test@example.com");
 
-        verify(userRepository, times(1)).updateUser(anyInt(), anyString(), anyString(), anyString(), anyString());
+        assertNotNull(foundUser);
+        assertEquals("testuser", foundUser.getUsername());
+        verify(userRepository, times(1)).findByEmail("test@example.com");
     }
 
     @Test
-    void testUpdateProfile_Fail_EmailAlreadyUsed() {
-        User existingUser = new User(1, "Jane Doe", "janedoe@example.com", "password123", "Pharma", null);
-        User anotherUser = new User(2, "John Smith", "johnsmith@example.com", "password456", "Patient", null);
+    void testFindByEmail_UserNotFound() {
+        when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
-        when(userRepository.findByEmail(anotherUser.getEmail())).thenReturn(Optional.of(anotherUser));
+        User foundUser = userService.findByEmail("nonexistent@example.com");
 
-        Exception exception = assertThrows(RuntimeException.class, () ->
-                userService.updateProfile(1, "Updated Name", "johnsmith@example.com", "", "Patient")
-        );
-
-        assertEquals("Email already in use by another user!", exception.getMessage());
-    }
-
-    @Test
-    void testDeleteUser_Success() {
-        assertDoesNotThrow(() -> userService.deleteUser(1));
-
-        verify(userRepository, times(1)).deleteUser(1);
+        assertNull(foundUser);
+        verify(userRepository, times(1)).findByEmail("nonexistent@example.com");
     }
 }
