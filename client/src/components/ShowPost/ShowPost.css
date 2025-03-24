@@ -1,0 +1,322 @@
+.post-card {
+  width: 100%;
+  width: 700px;
+  padding: 20px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+}
+
+.post-username-time {
+  margin-left: 10px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.time-ago {
+  color: #777;
+  font-size: 14px;
+}
+
+.post-content {
+  margin-top: 10px;
+}
+
+.post-actions {
+  margin-top: 20px;
+}
+.post-actions button {
+  margin-right: 10px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.post-actions button:hover {
+  background-color: #0056b3;
+}
+
+.post-actions button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.post-stats {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #50537a;
+}
+
+.post-stats span {
+  margin-right: 10px;
+}
+
+/* General Style */
+.post-card {
+  width: 100%;
+  width: 700px;
+  padding: 20px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Comment Section */
+.comments-section {
+  margin-top: 20px;
+  border-top: 2px solid #ddd;
+  padding-top: 10px;
+  max-height: 300px; /* Set a fixed height for the comment area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  position: relative; /* Allows positioning of the input box */
+}
+
+.comment-input {
+  position: sticky;
+  bottom: 0; /* Stick to the bottom of the comments section */
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  align-items: center;
+  background-color: #fff; /* White background for the input area */
+  padding: 10px;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1); /* Add shadow for separation */
+}
+
+.comment-input textarea {
+  width: 80%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+  min-height: 50px;
+}
+
+.comment-input button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.comment-input button:hover {
+  background-color: #0056b3;
+}
+
+.comment-input button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.comments-header h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  color: #333;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.comment strong {
+  color: #09013f;
+  margin-bottom: 4px;
+  font-size: 17px;
+}
+
+.comment p {
+  color: #555;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Discussion Section */
+.participations-section {
+  margin-top: 20px;
+  border-top: 2px solid #ddd;
+  padding-top: 10px;
+  max-height: 300px; /* Set a fixed height for the participation area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  position: relative; /* Allows positioning of the input box */
+}
+
+.participations-header h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.participation {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #e8ffe8;
+  border-radius: 5px;
+  color: #333;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.participation strong {
+  color: #2aab2a;
+  margin-bottom: 4px;
+  font-size: 17px;
+}
+
+.participation p {
+  color: #555;
+  margin: 0;
+  font-size: 14px;
+}
+
+.participation-input {
+  position: sticky;
+  bottom: 0; /* Stick to the bottom of the discussion section */
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  align-items: center;
+  background-color: #fff; /* White background for the input area */
+  padding: 10px;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1); /* Add shadow for separation */
+}
+
+.participation-input textarea {
+  width: 80%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+  min-height: 50px;
+}
+
+.participation-input button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.participation-input button:hover {
+  background-color: #0056b3;
+}
+
+.participation-input button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Answer Section (similar to comments) */
+.answers-section {
+  margin-top: 20px;
+  border-top: 2px solid #ddd;
+  padding-top: 10px;
+  max-height: 300px; /* Set a fixed height for the answers area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  position: relative; /* Allows positioning of the input box */
+}
+
+.answers-header h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.answer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #e6f7ff;
+  border-radius: 5px;
+  color: #333;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.answer strong {
+  color: #1d7cc7;
+  margin-bottom: 4px;
+  font-size: 17px;
+}
+
+.answer p {
+  color: #555;
+  margin: 0;
+  font-size: 14px;
+}
+
+.answer-input {
+  position: sticky;
+  bottom: 0; /* Stick to the bottom of the answers section */
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  align-items: center;
+  background-color: #fff; /* White background for the input area */
+  padding: 10px;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1); /* Add shadow for separation */
+}
+
+.answer-input textarea {
+  width: 80%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+  min-height: 50px;
+}
+
+.answer-input button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.answer-input button:hover {
+  background-color: #0056b3;
+}
+
+.answer-input button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

@@ -2,21 +2,7 @@ package com.rarediseaseapp.models;
 
 import java.sql.Timestamp;
 
-<<<<<<< HEAD
 public class User {
-=======
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
->>>>>>> bfa8440601ec4af7e6683a086b241d913aba2a97
     private int id;
     private String username;
     private String email;

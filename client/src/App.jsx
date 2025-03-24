@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/Navbar/NavBar";
 import Registration from "./pages/Registration";
-import Login from "./pages/Login";
-import Feed from "./pages/Feed";
-import Community from "./pages/Community";
-import Medicos from "./pages/Medicos";
+import Login from "./pages/LoginPage";
+import Feed from "./pages/FeedPage";
+import Community from "./pages/CommunityPage";
+import Medicos from "./pages/MedicosPage";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";

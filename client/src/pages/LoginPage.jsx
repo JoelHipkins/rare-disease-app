@@ -17,26 +17,33 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     fetch("http://localhost:8080/api/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
       .then((response) => {
+        // If response is not OK (i.e., 400), handle the error as plain text
         if (!response.ok) {
           return response.text().then((text) => {
+            // Display the plain text error message from the backend
             throw new Error(text);
           });
         }
-        return response.text();
+        // If response is OK, parse it as JSON for successful response (JWT and message)
+        return response.json();
       })
       .then((data) => {
-        alert(data); // If login is successful
-        localStorage.setItem("isLoggedIn", "true"); // Store login state
-        navigate("/feed"); // Redirect to feed page
+        // On success, alert the message and store the JWT
+        alert(data.message); // Show success message (e.g., "Welcome bilalbhai!")
+        localStorage.setItem("jwt", data.jwt); // Store the JWT token
+
+        navigate("/feed"); // Redirect to the feed page
       })
       .catch((error) => {
-        alert(error.message); // Show the error message
+        // Handle error, which contains the message from the backend
+        alert(error.message); // This will show "Incorrect credentials!" or any other error message
       });
   };
 

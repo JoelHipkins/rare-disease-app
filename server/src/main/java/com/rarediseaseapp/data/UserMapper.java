@@ -1,6 +1,11 @@
 package com.rarediseaseapp.data;
 
 import com.rarediseaseapp.models.User;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class UserMapper implements RowMapper<User> {
     public UserMapper() {
