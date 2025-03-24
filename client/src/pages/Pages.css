@@ -2,34 +2,11 @@
 
 .feed-container {
   padding: 20px;
-  background-color: #f4f4f9;
-}
-
-h1 {
-  font-size: 2rem;
-  color: #333;
-}
-
-.feed-posts {
-  margin-top: 20px;
-}
-
-.post {
-  background-color: white;
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-}
-
-.post h2 {
-  font-size: 1.5rem;
-  color: #007bff;
-}
-
-.post p {
-  font-size: 1rem;
-  color: #555;
+  background-color: #d2e4e4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* css for login page */
@@ -79,7 +56,7 @@ h1 {
 }
 
 .login-form button {
-  background-color: #4caf50;
+  background-color: #6c52b5;
   color: white;
   border: none;
   padding: 10px;
@@ -90,7 +67,7 @@ h1 {
 }
 
 .login-form button:hover {
-  background-color: #45a049;
+  background-color: #d9d9d9;
 }
 
 .signup-btn {
@@ -157,7 +134,7 @@ h1 {
 }
 
 .registration-form button {
-  background-color: #4caf50;
+  background-color: #6c52b5;
   color: white;
   border: none;
   padding: 10px;
@@ -168,5 +145,5 @@ h1 {
 }
 
 .registration-form button:hover {
-  background-color: #45a049;
+  background-color: #d9d9d9;
 }

@@ -1,63 +1,42 @@
 package com.rarediseaseapp.data;
 
 import com.rarediseaseapp.models.User;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
-import java.sql.Timestamp;
-import java.util.List;
 import java.util.Optional;
+import org.springframework.jdbc.support.KeyHolder;
 
 @Repository
-public class UserJdbcClientRepository {
+public class UserJdbcClientRepository implements UserRepository {
+    private final JdbcClient client;
 
-    private final JdbcTemplate jdbcTemplate;
-
-    public UserJdbcClientRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public UserJdbcClientRepository(JdbcClient client) {
+        this.client = client;
     }
 
-    // Save a new user
-    public void save(User user) {
-        String sql = "INSERT INTO users (name, email, password, role, createdAt) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword(), user.getRole(), new Timestamp(System.currentTimeMillis()));
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        Integer count = (Integer)this.client.sql("SELECT COUNT(*) FROM users WHERE email = ?").param(email).query(Integer.class).single();
+        return count != null && count > 0;
     }
 
-    // Find a user by email
+    public User create(User user) {
+        String sql = "INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = this.client.sql("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)").param("username", user.getUsername()).param("email", user.getEmail()).param("password", user.getPassword()).param("role", user.getRole()).update(keyHolder, new String[]{"id"});
+        if (rowsAffected <= 0) {
+            return null;
+        } else {
+            user.setId(keyHolder.getKey().intValue());
+            return user;
+        }
+    }
+
     public Optional<User> findByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
-        List<User> users = jdbcTemplate.query(sql, new Object[]{email}, userRowMapper());
-        return users.stream().findFirst();
-    }
-
-    // Find a user by ID
-    public Optional<User> findById(int userId) {
-        String sql = "SELECT * FROM users WHERE userId = ?";
-        List<User> users = jdbcTemplate.query(sql, new Object[]{userId}, userRowMapper());
-        return users.stream().findFirst();
-    }
-
-    // Update user details
-    public void updateUser(int userId, String name, String email, String password, String role) {
-        String sql = "UPDATE users SET name = ?, email = ?, password = ?, role = ? WHERE userId = ?";
-        jdbcTemplate.update(sql, name, email, password, role, userId);
-    }
-
-    // Delete a user by ID
-    public void deleteUser(int userId) {
-        String sql = "DELETE FROM users WHERE userId = ?";
-        jdbcTemplate.update(sql, ugit cserId);
-    }
-
-    // Maps database rows to a User object
-    private RowMapper<User> userRowMapper() {
-        return (rs, rowNum) -> new User(
-                rs.getInt("userId"),
-                rs.getString("name"),
-                rs.getString("email"),
-                rs.getString("password"),
-                rs.getString("role"),
-                rs.getTimestamp("createdAt")
-        );
+        return this.client.sql("SELECT * FROM users WHERE email = ?").param(email).query(new UserMapper()).optional();
     }
 }
+

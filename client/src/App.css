@@ -1,1 +1,23 @@
+/* General reset for margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+/* Make sure body and html elements take up full height */
+html,
+body {
+  height: 100%;
+  font-family: Arial, sans-serif; /* You can use your preferred font */
+}
+
+/* Add padding to body to prevent content from hiding behind navbar */
+body {
+  padding-top: 60px; /* Adjust this value based on your navbar height */
+}
+
+/* Ensure the content section uses full available height and pushes content down */
+.content {
+  padding: 20px;
+}

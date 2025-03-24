@@ -2,9 +2,9 @@ import { Navigate } from "react-router-dom";
 
 // ProtectedRoute component to protect routes that need authentication
 function ProtectedRoute({ children }) {
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isJwtToken = localStorage.getItem("jwt");
 
-  if (!isLoggedIn) {
+  if (!isJwtToken) {
     return <Navigate to="/" replace />; // Redirect to Login page if not logged in
   }
 
