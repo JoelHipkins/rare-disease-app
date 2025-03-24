@@ -1,10 +1,9 @@
 package com.rarediseaseapp.domain;
 
-import com.rarediseaseapp.data.UserRepository;
+import com.rarediseaseapp.data.UserJdbcClientRepository;
 import com.rarediseaseapp.models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
@@ -14,31 +13,31 @@ import static org.mockito.Mockito.*;
 
 class UserServiceTest {
 
-    private UserRepository userRepository;
+    private UserJdbcClientRepository userJdbcClientRepository;
     private UserService userService;
     private BCryptPasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setUp() {
-        userRepository = mock(UserRepository.class);
+        userJdbcClientRepository = mock(UserJdbcClientRepository.class);
         passwordEncoder = new BCryptPasswordEncoder();
-        userService = new UserService(userRepository);
+        userService = new UserService(userJdbcClientRepository);
     }
 
     @Test
     void testRegisterUser_Success() {
         User user = new User("John Doe", "johndoe@example.com", "password123", "Patient");
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
+        when(userJdbcClientRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
 
         assertDoesNotThrow(() -> userService.registerUser(user.getName(), user.getEmail(), user.getPassword(), user.getRole()));
 
-        verify(userRepository, times(1)).save(any(User.class));
+        verify(userJdbcClientRepository, times(1)).save(any(User.class));
     }
 
     @Test
     void testRegisterUser_Fail_DuplicateEmail() {
         User existingUser = new User(1, "John Doe", "johndoe@example.com", "password123", "Patient", null);
-        when(userRepository.findByEmail(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
+        when(userJdbcClientRepository.findByEmail(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
 
         Exception exception = assertThrows(RuntimeException.class, () ->
                 userService.registerUser(existingUser.getName(), existingUser.getEmail(), existingUser.getPassword(), existingUser.getRole())
@@ -53,7 +52,7 @@ class UserServiceTest {
         String hashedPassword = passwordEncoder.encode(rawPassword);
         User user = new User(1, "Jane Doe", "janedoe@example.com", hashedPassword, "Pharma", null);
 
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(userJdbcClientRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
         User loggedInUser = userService.loginUser(user.getEmail(), rawPassword);
 
@@ -66,7 +65,7 @@ class UserServiceTest {
         String hashedPassword = passwordEncoder.encode("password123");
         User user = new User(1, "Jane Doe", "janedoe@example.com", hashedPassword, "Pharma", null);
 
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(userJdbcClientRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
         User loggedInUser = userService.loginUser(user.getEmail(), "wrongpassword");
 
@@ -76,11 +75,11 @@ class UserServiceTest {
     @Test
     void testUpdateProfile_Success() {
         User existingUser = new User(1, "Jane Doe", "janedoe@example.com", "password123", "Pharma", null);
-        when(userRepository.findByEmail(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
+        when(userJdbcClientRepository.findByEmail(existingUser.getEmail())).thenReturn(Optional.of(existingUser));
 
         assertDoesNotThrow(() -> userService.updateProfile(1, "Updated Name", "janedoe@example.com", "", "Patient"));
 
-        verify(userRepository, times(1)).updateUser(anyInt(), anyString(), anyString(), anyString(), anyString());
+        verify(userJdbcClientRepository, times(1)).updateUser(anyInt(), anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -88,7 +87,7 @@ class UserServiceTest {
         User existingUser = new User(1, "Jane Doe", "janedoe@example.com", "password123", "Pharma", null);
         User anotherUser = new User(2, "John Smith", "johnsmith@example.com", "password456", "Patient", null);
 
-        when(userRepository.findByEmail(anotherUser.getEmail())).thenReturn(Optional.of(anotherUser));
+        when(userJdbcClientRepository.findByEmail(anotherUser.getEmail())).thenReturn(Optional.of(anotherUser));
 
         Exception exception = assertThrows(RuntimeException.class, () ->
                 userService.updateProfile(1, "Updated Name", "johnsmith@example.com", "", "Patient")
@@ -101,6 +100,6 @@ class UserServiceTest {
     void testDeleteUser_Success() {
         assertDoesNotThrow(() -> userService.deleteUser(1));
 
-        verify(userRepository, times(1)).deleteUser(1);
+        verify(userJdbcClientRepository, times(1)).deleteUser(1);
     }
 }
