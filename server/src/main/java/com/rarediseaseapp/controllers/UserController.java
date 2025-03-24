@@ -2,69 +2,40 @@ package com.rarediseaseapp.controllers;
 
 import com.rarediseaseapp.domain.UserService;
 import com.rarediseaseapp.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Optional;
-
+@CrossOrigin(
+        origins = {"http://localhost:5173"}
+)
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping({"/api/users"})
 public class UserController {
+    @Autowired
+    private UserService userService;
 
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController() {
     }
 
-    @PostMapping("/register")
+    @PostMapping({"/register"})
     public ResponseEntity<String> registerUser(@RequestBody User user) {
-        try {
-            userService.registerUser(user.getName(), user.getEmail(), user.getPassword(), user.getRole());
-            return ResponseEntity.ok("User registered successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
-        String email = loginData.get("email");
-        String password = loginData.get("password");
-
-        User user = userService.loginUser(email, password);
-        if (user != null) {
-            return ResponseEntity.ok(user);
+        if (this.userService.existsByEmail(user.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists!");
         } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
+            this.userService.saveUser(user);
+            return ResponseEntity.status(HttpStatus.OK).body("User registered successfully!");
         }
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
-        Optional<User> user = userService.getUserByEmail(email);
-
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
+    @PostMapping({"/login"})
+    public ResponseEntity<String> loginUser(@RequestBody User user) {
+        User existingUser = this.userService.findByEmail(user.getEmail());
+        if (existingUser == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please register first!");
         } else {
-            return ResponseEntity.notFound().build();
+            return existingUser.getPassword().equals(user.getPassword()) ? ResponseEntity.status(HttpStatus.OK).body("Welcome " + existingUser.getUsername() + "!") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect credentials!");
         }
-    }
-
-    @PutMapping("/{userId}/update")
-    public ResponseEntity<String> updateProfile(@PathVariable int userId, @RequestBody User updatedUser) {
-        try {
-            userService.updateProfile(userId, updatedUser.getName(), updatedUser.getEmail(), updatedUser.getPassword(), updatedUser.getRole());
-            return ResponseEntity.ok("User profile updated successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    @DeleteMapping("/{userId}/delete")
-    public ResponseEntity<String> deleteUser(@PathVariable int userId) {
-        userService.deleteUser(userId);
-        return ResponseEntity.ok("User deleted successfully");
     }
 }
