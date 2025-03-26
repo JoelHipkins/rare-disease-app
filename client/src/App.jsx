@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar/NavBar";
 import Registration from "./pages/Registration";
 import Login from "./pages/LoginPage";
 import Feed from "./pages/FeedPage";
-import Community from "./pages/CommunityPage";
+import Community from "./pages/Community-Page/CommunityPage";
 import Medicos from "./pages/MedicosPage";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";

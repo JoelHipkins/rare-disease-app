@@ -1,9 +1,6 @@
 package com.rarediseaseapp.domain;
 
-import com.rarediseaseapp.data.AnswerMapper;
-import com.rarediseaseapp.data.CommentRowMapper;
-import com.rarediseaseapp.data.DiscussionMapper;
-import com.rarediseaseapp.data.PostRepository;
+import com.rarediseaseapp.data.*;
 import com.rarediseaseapp.models.Answer;
 import com.rarediseaseapp.models.Comment;
 import com.rarediseaseapp.models.Participation;
@@ -38,6 +35,12 @@ public class PostService {
         return this.postRepository.findById(id);
     }
 
+    public List<Post> getPostsForMedicos() {
+        String sql = "SELECT p.id, p.content, p.type, p.user_id, p.created_at, u.username, (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id) AS likes_count, (SELECT COUNT(*) FROM comments c WHERE c.post_id = p.id) AS comments_count, (SELECT COUNT(*) FROM answers a WHERE a.post_id = p.id) AS answers_count, (SELECT COUNT(*) FROM discussions d WHERE d.post_id = p.id) AS participations_count FROM posts p JOIN users u ON p.user_id = u.id WHERE u.role = 'doctor' OR u.role = 'pharma' ;";
+        List<Post> posts = this.jdbcTemplate.query(sql, new PostMapper());
+        return posts;
+    }
+
     public boolean likePost(int postId, int userId) {
         String insertLikeSql = "INSERT INTO likes (post_id, user_id) VALUES (?, ?)";
         this.jdbcTemplate.update(insertLikeSql, new Object[]{postId, userId});
@@ -64,7 +67,7 @@ public class PostService {
 
     public List<Comment> getCommentsByPostId(int postId) {
         String sql = "SELECT c.content, u.username FROM comments c JOIN users u ON c.user_id = u.id WHERE c.post_id = ?";
-        List<Comment> comments = this.jdbcTemplate.query(sql, new Object[]{postId}, new CommentRowMapper());
+        List<Comment> comments = this.jdbcTemplate.query(sql, new Object[]{postId}, new CommentMapper());
         return comments;
     }
 
@@ -78,3 +81,4 @@ public class PostService {
         return this.jdbcTemplate.query(query, new Object[]{postId}, new DiscussionMapper());
     }
 }
+

@@ -16,13 +16,13 @@
 .user-avatar-circle {
   width: 40px;
   height: 40px;
-  background-color: #a8d4e3; /* light blue background */
-  color: purple; /* text color */
+  background-color: #a8d4e3;
+  color: rgb(110, 74, 225);
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%; /* make it round */
+  border-radius: 50%;
   font-size: 20px;
   margin-right: 10px;
 }
@@ -67,13 +67,13 @@
 }
 
 .post-option.active {
-  background-color: RGB(149, 237, 234);
-  color: #070247;
+  background-color: rgb(110, 74, 225);
+  color: #ffffff;
 }
 
 .post-submit {
-  background-color: RGB(149, 237, 234);
-  color: #09004b;
+  background-color: rgb(110, 74, 225);
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
   border-radius: 20px;

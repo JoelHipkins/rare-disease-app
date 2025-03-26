@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
-public class CommentRowMapper implements RowMapper<Comment> {
-    public CommentRowMapper() {
+public class CommentMapper implements RowMapper<Comment> {
+    public CommentMapper() {
     }
 
     public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {

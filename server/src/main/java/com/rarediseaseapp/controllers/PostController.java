@@ -65,6 +65,24 @@ public class PostController {
         }
     }
 
+    @GetMapping({"/medicos"})
+    public ResponseEntity<List<Post>> getPostsForMedicos(@RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            String role = this.jwtUtil.extractRole(token);
+            System.out.println("Extracted Role: " + role);
+            if (!role.equals("DOCTOR") && !role.equals("PHARMA")) {
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
+            } else {
+                List<Post> posts = this.postService.getPostsForMedicos();
+                return ResponseEntity.ok(posts);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping({"/{postId}/like"})
     public ResponseEntity<Map<String, String>> likePost(@PathVariable int postId, @RequestHeader("Authorization") String authHeader) {
         try {

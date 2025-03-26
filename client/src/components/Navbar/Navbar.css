@@ -1,17 +1,10 @@
-/* General reset for margin and padding */
-
-/* Navbar styling */
 nav {
   height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  background-color: rgb(
-    149,
-    237,
-    234
-  ); /* Dark grayish-blue background for a professional look */
+  background-color: rgb(149, 237, 234);
 
   position: fixed;
   top: 0;
@@ -19,7 +12,7 @@ nav {
   right: 0;
   z-index: 1000;
   width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .logo-container {
   display: flex;
@@ -45,31 +38,31 @@ nav ul {
   padding: 0;
   margin-left: 15%;
   display: flex;
-  justify-content: center; /* Center align items horizontally */
+  justify-content: center;
 }
 
 nav ul li {
-  margin-right: 2.5em; /* Space between buttons */
+  margin-right: 2.5em;
 }
 
 nav ul li button {
-  background-color: transparent; /* Neutral gray color for buttons */
-  color: #15023d; /* Light text color for contrast */
-  border: 1px solid transparent; /* Subtle border effect */
+  background-color: transparent;
+  color: #15023d;
+  border: 1px solid transparent;
   padding: 10px 18px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 5px; /* Rounded corners */
-  transition: all 0.3s ease; /* Smooth transition for hover effect */
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 nav ul li button:hover {
-  background-color: #16025e; /* Slightly darker background on hover */
-  border-color: #ecf0f1; /* Light border color on hover */
+  background-color: #16025e;
+  border-color: #ecf0f1;
   color: white;
-  transform: scale(1.05); /* Subtle grow effect */
+  transform: scale(1.05);
 }
 
 nav ul li button:focus {
-  outline: none; /* Remove default focus outline */
+  outline: none;
 }
