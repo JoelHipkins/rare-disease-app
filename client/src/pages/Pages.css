@@ -2,13 +2,25 @@
 
 .feed-container {
   padding: 20px;
-  background-color: #d2e4e4;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.medicos-container {
+  padding: 20px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.medicos-heading {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 /* css for login page */
 
 .login-container {
@@ -56,7 +68,7 @@
 }
 
 .login-form button {
-  background-color: #6c52b5;
+  background-color: #4caf50;
   color: white;
   border: none;
   padding: 10px;
@@ -67,7 +79,7 @@
 }
 
 .login-form button:hover {
-  background-color: #d9d9d9;
+  background-color: #45a049;
 }
 
 .signup-btn {
@@ -134,7 +146,7 @@
 }
 
 .registration-form button {
-  background-color: #6c52b5;
+  background-color: #4caf50;
   color: white;
   border: none;
   padding: 10px;
@@ -145,5 +157,5 @@
 }
 
 .registration-form button:hover {
-  background-color: #d9d9d9;
+  background-color: #45a049;
 }

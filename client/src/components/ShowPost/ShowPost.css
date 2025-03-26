@@ -1,5 +1,4 @@
 .post-card {
-  width: 100%;
   width: 700px;
   padding: 20px;
   margin-top: 5px;
@@ -39,7 +38,7 @@
 .post-actions button {
   margin-right: 10px;
   padding: 8px 12px;
-  background-color: #007bff;
+  background-color: rgb(110, 74, 225);
   color: white;
   border: none;
   border-radius: 4px;
@@ -69,7 +68,7 @@
   width: 100%;
   width: 700px;
   padding: 20px;
-  margin-top: 5px;
+  margin-top: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #fff;
@@ -78,26 +77,25 @@
   flex-direction: column;
 }
 
-/* Comment Section */
 .comments-section {
   margin-top: 20px;
   border-top: 2px solid #ddd;
   padding-top: 10px;
-  max-height: 300px; /* Set a fixed height for the comment area */
-  overflow-y: auto; /* Enable vertical scrolling */
-  position: relative; /* Allows positioning of the input box */
+  max-height: 300px;
+  overflow-y: auto;
+  position: relative;
 }
 
 .comment-input {
   position: sticky;
-  bottom: 0; /* Stick to the bottom of the comments section */
+  bottom: 0;
   display: flex;
   flex-direction: row;
   margin-top: 10px;
   align-items: center;
-  background-color: #fff; /* White background for the input area */
+  background-color: #fff;
   padding: 10px;
-  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1); /* Add shadow for separation */
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .comment-input textarea {
@@ -164,9 +162,9 @@
   margin-top: 20px;
   border-top: 2px solid #ddd;
   padding-top: 10px;
-  max-height: 300px; /* Set a fixed height for the participation area */
-  overflow-y: auto; /* Enable vertical scrolling */
-  position: relative; /* Allows positioning of the input box */
+  max-height: 300px;
+  overflow-y: auto;
+  position: relative;
 }
 
 .participations-header h3 {
@@ -202,14 +200,14 @@
 
 .participation-input {
   position: sticky;
-  bottom: 0; /* Stick to the bottom of the discussion section */
+  bottom: 0;
   display: flex;
   flex-direction: row;
   margin-top: 10px;
   align-items: center;
-  background-color: #fff; /* White background for the input area */
+  background-color: #fff;
   padding: 10px;
-  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1); /* Add shadow for separation */
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .participation-input textarea {
@@ -245,9 +243,9 @@
   margin-top: 20px;
   border-top: 2px solid #ddd;
   padding-top: 10px;
-  max-height: 300px; /* Set a fixed height for the answers area */
-  overflow-y: auto; /* Enable vertical scrolling */
-  position: relative; /* Allows positioning of the input box */
+  max-height: 300px;
+  overflow-y: auto;
+  position: relative;
 }
 
 .answers-header h3 {
@@ -283,14 +281,14 @@
 
 .answer-input {
   position: sticky;
-  bottom: 0; /* Stick to the bottom of the answers section */
+  bottom: 0;
   display: flex;
   flex-direction: row;
   margin-top: 10px;
   align-items: center;
-  background-color: #fff; /* White background for the input area */
+  background-color: #fff;
   padding: 10px;
-  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1); /* Add shadow for separation */
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .answer-input textarea {
