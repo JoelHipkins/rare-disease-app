@@ -80,5 +80,10 @@ public class PostService {
         String query = "SELECT d.*, u.username FROM discussions d JOIN users u ON d.user_id = u.id WHERE d.post_id = ?";
         return this.jdbcTemplate.query(query, new Object[]{postId}, new DiscussionMapper());
     }
+
+    public void deletePostsByUserId(int userId) {
+        String sql = "DELETE FROM posts WHERE user_id = ?";
+        this.jdbcTemplate.update(sql, new Object[]{userId});
+    }
 }
 

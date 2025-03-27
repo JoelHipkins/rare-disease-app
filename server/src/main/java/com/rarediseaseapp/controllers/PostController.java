@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 @CrossOrigin(
         origins = {"http://localhost:5173"}
 )
@@ -69,9 +70,9 @@ public class PostController {
     public ResponseEntity<List<Post>> getPostsForMedicos(@RequestHeader("Authorization") String authHeader) {
         try {
             String token = authHeader.replace("Bearer ", "");
-            String role = this.jwtUtil.extractRole(token);
+            String role = this.jwtUtil.extractRole(token).toLowerCase();
             System.out.println("Extracted Role: " + role);
-            if (!role.equals("DOCTOR") && !role.equals("PHARMA")) {
+            if (!role.equals("doctor") && !role.equals("pharma") && !role.equals("patient")) {
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
             } else {
                 List<Post> posts = this.postService.getPostsForMedicos();

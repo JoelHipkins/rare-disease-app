@@ -1,0 +1,165 @@
+.profile-container {
+  width: 100%;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Profile Header Styles */
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.profile-info {
+  flex-grow: 1;
+  margin-left: 15px;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.profile-info p {
+  font-size: 16px;
+  color: gray;
+}
+
+.settings-button {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+/* Settings Options Styles */
+.profile-settings-actions {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-left: 35px;
+}
+
+.profile-settings-actions button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.profile-settings-actions button:hover {
+  background-color: #0056b3;
+}
+
+/* Profile Update Form Styles */
+.profile-update-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 35px;
+}
+
+.profile-update-form input {
+  padding-left: 5px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.profile-update-form select {
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: 3px;
+}
+
+.profile-actions {
+  margin-left: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+}
+
+.profile-actions button {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.profile-actions button:hover {
+  background-color: #218838;
+}
+
+.profile-actions button:nth-child(2) {
+  background-color: #dc3545;
+}
+
+.profile-actions button:nth-child(2):hover {
+  background-color: #c82333;
+}
+
+.delete-confirmation-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.delete-confirmation-modal button {
+  margin: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.delete-confirmation-modal button:hover {
+  background-color: #c82333;
+}
+
+.delete-confirmation-modal button:nth-child(2) {
+  background-color: #6c757d;
+}
+
+.delete-confirmation-modal button:nth-child(2):hover {
+  background-color: #5a6268;
+}

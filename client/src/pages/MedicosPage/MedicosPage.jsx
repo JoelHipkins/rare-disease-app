@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import PostCreation from "../components/CreatePost/PostCreation"; // Import PostCreation component
-import ShowPost from "../components/ShowPost/ShowPost"; // Import ShowPost component
+import PostCreation from "../../components/CreatePost/PostCreation"; // Import PostCreation component
+import ShowPost from "../../components/ShowPost/ShowPost"; // Import ShowPost component
+import "./Medicos.css";
 // import { data } from "react-router-dom";
 
 export default function MedicosPage() {

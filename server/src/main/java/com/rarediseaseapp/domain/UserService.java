@@ -35,5 +35,13 @@ public class UserService {
     public boolean validatePassword(String proposedPassword, String existingPassword) {
         return BCrypt.verifyer().verify(proposedPassword.toCharArray(), existingPassword.toCharArray()).verified;
     }
+
+    public Optional<User> findById(int id) {
+        return this.userRepository.findById(id);
+    }
+
+    public User updateUser(User user) {
+        return this.userRepository.update(user);
+    }
 }
 

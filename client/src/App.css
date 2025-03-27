@@ -17,7 +17,6 @@ body {
   padding-top: 60px; /* Adjust this value based on your navbar height */
 }
 
-/* Ensure the content section uses full available height and pushes content down */
 .content {
   padding: 20px;
 }
