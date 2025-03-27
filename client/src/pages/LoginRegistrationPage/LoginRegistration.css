@@ -1,29 +1,4 @@
-/* Css for feed 
-
-.feed-container {
-  padding: 20px;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.medicos-container {
-  padding: 20px;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.medicos-heading {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-/* css for login page */
-
-/*.login-container {
+.login-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -100,7 +75,7 @@
 
 /* css for registration  */
 
-/*.registration-container {
+.registration-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -109,7 +84,7 @@
   background-color: #f5f5f5;
 }
 
-/*.registration-heading {
+.registration-heading {
   font-size: 24px;
   font-weight: bold;
   color: #333;
@@ -158,4 +133,4 @@
 
 .registration-form button:hover {
   background-color: #45a049;
-} */
+}

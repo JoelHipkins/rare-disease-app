@@ -38,5 +38,20 @@ public class UserJdbcClientRepository implements UserRepository {
         String sql = "SELECT * FROM users WHERE email = ?";
         return this.client.sql("SELECT * FROM users WHERE email = ?").param(email).query(new UserMapper()).optional();
     }
+
+    public Optional<User> findById(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        return this.client.sql("SELECT * FROM users WHERE id = ?").param(id).query(new UserMapper()).optional();
+    }
+
+    public User update(User user) {
+        String sql = "UPDATE users SET username = :username, role = :role WHERE id = :id";
+        int rowsAffected = this.client.sql("UPDATE users SET username = :username, role = :role WHERE id = :id").param("username", user.getUsername()).param("role", user.getRole()).param("id", user.getId()).update();
+        if (rowsAffected > 0) {
+            return user;
+        } else {
+            throw new RuntimeException("Failed to update user");
+        }
+    }
 }
 

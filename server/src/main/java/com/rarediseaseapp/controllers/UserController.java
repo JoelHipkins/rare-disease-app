@@ -3,62 +3,132 @@ package com.rarediseaseapp.controllers;
 import com.rarediseaseapp.domain.UserService;
 import com.rarediseaseapp.models.User;
 import com.rarediseaseapp.security.JwtUtil;
+import com.rarediseaseapp.domain.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.Map;
+import java.util.Optional;
+import java.util.HashMap;
 
-@CrossOrigin(origins = "http://localhost:5173") // Allow CORS for frontend access
+@CrossOrigin(
+        origins = {"http://localhost:5173"}
+)
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping({"/api/users"})
 public class UserController {
-
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     @Autowired
     private UserService userService;
-
     @Autowired
-    private JwtUtil jwtUtil; // JWT utility for creating tokens
+    private PostService postService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    // POST method for user registration
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-        // Check if the email already exists
-        if (userService.existsByEmail(user.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists!"); // If user exists, return 400 with a message
-        }
-
-        // Save the user with the hashed password
-        userService.saveUser(user);
-
-        // Return a success message without JWT token after registration
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!"); // No token here
+    public UserController() {
     }
 
-    // POST method for user login
-    @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@RequestBody User user) {
-        // Check if the user exists by email
-        // Unwrap the Optional<User> using .orElse(null)
-        User existingUser = userService.findByEmail(user.getEmail()).orElse(null);
+    @PostMapping({"/register"})
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        if (this.userService.existsByEmail(user.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists!");
+        } else {
+            this.userService.saveUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
+        }
+    }
 
+    @PostMapping({"/login"})
+    public ResponseEntity<Object> loginUser(@RequestBody User user) {
+        User existingUser = (User)this.userService.findByEmail(user.getEmail()).orElse((User) null);
         if (existingUser == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please register first");
-        }
-
-
-        // Validate password using BCrypt
-        if (userService.validatePassword(user.getPassword(), existingUser.getPassword())) {
-            // Create JWT token after successful login
-            String jwt = jwtUtil.createToken(existingUser);
-
-            // Return success message with the JWT token
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(Map.of("message", "Welcome " + existingUser.getUsername() + "!", "jwt", jwt));  // 200 OK, return JWT token and message
+        } else if (this.userService.validatePassword(user.getPassword(), existingUser.getPassword())) {
+            String jwt = this.jwtUtil.createToken(existingUser);
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Welcome " + existingUser.getUsername() + "!", "jwt", jwt));
         } else {
-            // If password is incorrect, return an error message with 400 status
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect credentials!");  // 400 Bad Request
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect credentials!");
+        }
+    }
+
+    @GetMapping({"/profile"})
+    public ResponseEntity<User> getProfile(@RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            String email = this.jwtUtil.extractEmail(token);
+            Optional<User> userOptional = this.userService.findByEmail(email);
+            if (userOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body((User) null);
+            } else {
+                User user = (User)userOptional.get();
+                return ResponseEntity.ok(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping({"/profile"})
+    public ResponseEntity<User> updateUserProfile(@RequestBody Map<String, String> userDetails, @RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            int userId = this.jwtUtil.extractUserId(token).intValue();
+            Optional<User> userOptional = this.userService.findById(userId);
+            if (userOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body((User) null);
+            } else {
+                User user = (User)userOptional.get();
+                String newUsername = (String)userDetails.get("username");
+                String newRole = (String)userDetails.get("role");
+                if (newUsername != null && !newUsername.isEmpty()) {
+                    user.setUsername(newUsername);
+                }
+
+                if (newRole != null && !newRole.isEmpty()) {
+                    user.setRole(newRole);
+                }
+
+                this.userService.updateUser(user);
+                return ResponseEntity.ok(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((User) null);
+        }
+    }
+
+    @DeleteMapping({"/delete"})
+    public ResponseEntity<Map<String, String>> deleteUser(@RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            int userId = this.jwtUtil.extractUserId(token).intValue();
+            this.postService.deletePostsByUserId(userId);
+            String deleteCommentsSql = "DELETE FROM comments WHERE user_id = ?";
+            this.jdbcTemplate.update(deleteCommentsSql, new Object[]{userId});
+            String deleteLikesSql = "DELETE FROM likes WHERE user_id = ?";
+            this.jdbcTemplate.update(deleteLikesSql, new Object[]{userId});
+            String deleteAnswersSql = "DELETE FROM answers WHERE user_id = ?";
+            this.jdbcTemplate.update(deleteAnswersSql, new Object[]{userId});
+            String deleteDiscussionsSql = "DELETE FROM discussions WHERE user_id = ?";
+            this.jdbcTemplate.update(deleteDiscussionsSql, new Object[]{userId});
+            String deleteCommunityMembersSql = "DELETE FROM community_members WHERE user_id = ?";
+            this.jdbcTemplate.update(deleteCommunityMembersSql, new Object[]{userId});
+            String deleteUserSql = "DELETE FROM users WHERE id = ?";
+            this.jdbcTemplate.update(deleteUserSql, new Object[]{userId});
+            Map<String, String> response = new HashMap();
+            response.put("message", "User and related data deleted successfully.");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Map<String, String> errorResponse = new HashMap();
+            errorResponse.put("message", "Error deleting user");
+            return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
