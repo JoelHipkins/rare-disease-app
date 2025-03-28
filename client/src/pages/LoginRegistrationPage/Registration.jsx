@@ -78,8 +78,8 @@ const Registration = () => {
           required
         >
           <option value="PATIENT">Patient</option>
-          <option value="DOCTOR">Doctor</option>
-          <option value="PHARMA">Pharma</option>
+          <option value="DOCTOR">Medical Professional</option>
+          <option value="PHARMA">Life Science Company</option>
         </select>
 
         <button type="submit">Register</button>

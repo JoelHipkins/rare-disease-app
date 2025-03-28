@@ -1,7 +1,7 @@
 .community-card {
   width: 100%;
   max-width: 600px;
-  margin: 20px auto;
+  margin: 30px auto;
   padding: 20px;
   border-radius: 12px;
   text-align: center;
@@ -15,34 +15,26 @@
   transform: translateY(-5px);
 }
 
-.community-card-header h3 {
-  margin: 0;
-  font-size: 24px;
-  color: #333;
+.community-name {
+  margin: 5px;
+  font-size: 19px;
+  font-weight: 700;
+  color: #020202;
 }
 
-.community-card-header .creator-name {
+.creator-name {
   display: block;
-  margin-top: 5px;
-  color: #888;
-  font-size: 14px;
+  font-weight: 500;
+  color: #0c0b0b;
+  font-size: 17px;
+  margin: 5px;
 }
 
-.community-card-body p {
-  margin: 15px 0;
-  font-size: 16px;
-  color: #666;
-  line-height: 1.5;
-}
-
-.community-stats {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #555;
-}
-
-.community-card-footer {
-  margin-top: 20px;
+.community-members {
+  display: block;
+  font-weight: 500;
+  color: #0c0b0b;
+  font-size: 17px;
 }
 
 .community-card .join-btn,
@@ -56,20 +48,21 @@
 }
 
 .community-card .join-btn {
-  background-color: #28a745;
+  margin-top: 10px;
+  background-color: #45277d;
   color: white;
 }
 
 .community-card .joined-btn {
-  background-color: #007bff;
-  color: white;
+  background-color: #4ebac0;
+  color: rgb(236, 236, 236);
   cursor: not-allowed;
 }
 
 .community-card .join-btn:hover {
-  background-color: #218838;
+  background-color: #2c036e;
 }
 
 .community-card .joined-btn:hover {
-  background-color: #0056b3;
+  background-color: #076174;
 }

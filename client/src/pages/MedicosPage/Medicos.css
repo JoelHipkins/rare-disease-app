@@ -1,13 +1,12 @@
-
-.medicos-container{
-    padding: 20px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .medicos-heading{
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
+.medicos-container {
+  padding: 20px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.medicos-heading {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

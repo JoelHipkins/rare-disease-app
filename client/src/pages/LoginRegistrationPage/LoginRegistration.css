@@ -43,7 +43,7 @@
 }
 
 .login-form button {
-  background-color: #4caf50;
+  background-color: rgb(110, 74, 225);
   color: white;
   border: none;
   padding: 10px;
@@ -54,7 +54,7 @@
 }
 
 .login-form button:hover {
-  background-color: #45a049;
+  background-color: #16025e;
 }
 
 .signup-btn {
@@ -121,7 +121,7 @@
 }
 
 .registration-form button {
-  background-color: #4caf50;
+  background-color: rgb(110, 74, 225);
   color: white;
   border: none;
   padding: 10px;
@@ -132,5 +132,5 @@
 }
 
 .registration-form button:hover {
-  background-color: #45a049;
+  background-color: #16025e;
 }

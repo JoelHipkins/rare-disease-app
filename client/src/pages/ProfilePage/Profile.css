@@ -67,14 +67,15 @@
   padding: 10px 20px;
   margin-top: 10px;
   cursor: pointer;
-  background-color: #007bff;
+  background-color: rgb(110, 74, 225);
   color: white;
   border: none;
+  margin-right: 10px;
   border-radius: 5px;
 }
 
 .profile-settings-actions button:hover {
-  background-color: #0056b3;
+  background-color: #16025e;
 }
 
 /* Profile Update Form Styles */

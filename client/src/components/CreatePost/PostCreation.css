@@ -6,6 +6,7 @@
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 17px;
 }
 
 .create-post-container {
@@ -16,8 +17,8 @@
 .user-avatar-circle {
   width: 40px;
   height: 40px;
-  background-color: #a8d4e3;
-  color: rgb(110, 74, 225);
+  background-color: #07bdd1;
+  color: #45277d;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -67,13 +68,13 @@
 }
 
 .post-option.active {
-  background-color: rgb(110, 74, 225);
-  color: #ffffff;
+  background-color: #45277d;
+  color: #d6e8ea;
 }
 
 .post-submit {
-  background-color: rgb(110, 74, 225);
-  color: #ffffff;
+  background-color: #45277d;
+  color: #d6e8ea;
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
@@ -83,5 +84,5 @@
 }
 
 .post-submit:hover {
-  /* background-color: #45a049; */
+  background-color: #46199a;
 }

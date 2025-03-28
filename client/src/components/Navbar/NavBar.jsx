@@ -23,7 +23,7 @@ function Navbar() {
     <nav>
       <div className="logo-container">
         <img className="logo" src={logo} alt="photo" />
-        <span className="app-name">Rare Disease</span>
+        <span className="app-name">RareSight</span>
       </div>
 
       <ul>

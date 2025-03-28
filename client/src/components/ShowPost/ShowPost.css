@@ -46,7 +46,7 @@
 }
 
 .post-actions button:hover {
-  background-color: #0056b3;
+  background-color: #16025e;
 }
 
 .post-actions button:disabled {
@@ -110,15 +110,16 @@
 
 .comment-input button {
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: rgb(110, 74, 225);
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .comment-input button:hover {
-  background-color: #0056b3;
+  background-color: #16025e;
 }
 
 .comment-input button:disabled {
@@ -222,15 +223,16 @@
 
 .participation-input button {
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: rgb(110, 74, 225);
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .participation-input button:hover {
-  background-color: #0056b3;
+  background-color: #16025e;
 }
 
 .participation-input button:disabled {
@@ -303,15 +305,16 @@
 
 .answer-input button {
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: rgb(110, 74, 225);
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .answer-input button:hover {
-  background-color: #0056b3;
+  background-color: #16025e;
 }
 
 .answer-input button:disabled {

@@ -1,13 +1,13 @@
 .community-page-container {
   width: 100%;
-  max-width: 780px;
-  margin: 0 auto;
+  max-width: 780px; /* Set the maximum width */
+  margin: 0 auto; /* Center the content horizontally */
   padding: 20px;
 }
 
 .community-page-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Space out the heading and buttons */
   align-items: center;
   margin-bottom: 20px;
 }
@@ -19,7 +19,7 @@
 
 .community-header-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Align buttons to the right */
 }
 
 .community-header-actions button {
@@ -30,7 +30,7 @@
 }
 
 .create-community-button {
-  background-color: #4caf50;
+  background-color: rgb(110, 74, 225);
   color: white;
   border: none;
   border-radius: 4px;
@@ -89,7 +89,7 @@
 }
 
 .submit-button {
-  background-color: #4caf50;
+  background-color: rgb(110, 74, 225);
   color: white;
   padding: 10px;
   width: 100%;
